@@ -34,8 +34,8 @@ for contour in contours:
             cv2.drawContours(image, [contour], 0, (0, 255, 0), 2)  # 在原图上以绿色画出轮廓
 
 # 显示处理后的图像
-cv2.imshow('Detected Circular Object', image)
-cv2.waitKey(0)
+# cv2.imshow('Detected Circular Object', image)
+# cv2.waitKey(0)
 
 
 # 对找到的轮廓拟合椭圆
@@ -46,13 +46,18 @@ for contour in contours:
         # 检查椭圆的尺寸和位置
         center, axes, angle = ellipse
         if axes[0] >= 0 and axes[1] >= 0:
+            # 生成随机颜色
+            color = (np.random.randint(0, 255), np.random.randint(0, 255), np.random.randint(0, 255))
+            
             # 绘制椭圆
-            cv2.ellipse(image, ellipse, (0, 255, 0), 2)  # 在原图上以绿色画出椭圆轮廓
+            cv2.ellipse(image, ellipse, color, 2)  # 在原图上以随机颜色画出椭圆轮廓
 
 # 显示处理后的图像
 cv2.imshow('Fitted Ellipse', image)
 cv2.waitKey(0)
+cv2.destroyAllWindows()
 
+    
 
 # 找到最大的椭圆
 max_area = 0
@@ -72,15 +77,10 @@ for contour in contours:
 
 # 如果找到了最大的椭圆，绘制它
 if max_ellipse is not None:
-    cv2.ellipse(image, max_ellipse, (255, 255, 255), 8)  # 以绿色画出最大的椭圆轮廓
+    cv2.ellipse(image, max_ellipse, (255, 255, 255), 8)  # 以白色画出最大的椭圆轮廓
 
-# 显示处理后的图像
+# 保存并显示处理后的图像
+cv2.imwrite('LargestFittedEllipse.jpg', image)
 cv2.imshow('Largest Fitted Ellipse', image)
 cv2.waitKey(0)
-
-
-
-
 cv2.destroyAllWindows()
-    
-
