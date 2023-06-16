@@ -10,16 +10,16 @@
 
 最小二乘法
 
-![LargestFittedEllipse](/Volumes/NO NAME/lixiang_nangpi/LargestFittedEllipse.jpg)
+![LargestFittedEllipse](./LargestFittedEllipse.jpg)
 
 
 
 二值化处理
 
-![binary_image](/Volumes/NO NAME/lixiang_nangpi/binary_image.jpg)
+![binary_image](./binary_image.jpg)
 
 
 
 二值化后轮廓检测
 
-![Contours](/Volumes/NO NAME/lixiang_nangpi/Contours.jpg)
+![Contours](./Contours.jpg)
