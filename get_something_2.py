@@ -41,11 +41,11 @@ cv2.waitKey(0)
 smoothed_gray = cv2.GaussianBlur(gray, (9, 9), 2)
 
 # 减小图像大小
-smaller = cv2.resize(smoothed_gray, (0,0), fx=0.25, fy=0.25) 
+smaller = cv2.resize(smoothed_gray, (0,0), fx=0.1, fy=0.1) 
 
 # 使用Hough变换检测圆
 circles = cv2.HoughCircles(smaller, cv2.HOUGH_GRADIENT, dp=1, minDist=900,
-                           param1=50, param2=50, minRadius=1000, maxRadius=0)
+                           param1=50, param2=50, minRadius=100, maxRadius=0)
 
 
 
@@ -61,7 +61,7 @@ if circles is not None:
     circles = np.uint16(np.around(circles))
     for i in circles[0, :]:
         # 画出外圆
-        cv2.circle(image_with_circles, (i[0], i[1]), i[2], (255, 0, 0), 2)
+        cv2.circle(image_with_circles, (i[0], i[1]), i[2], (255, 255, 0), 2)
         # 画出圆心
         # cv2.circle(image_with_circles, (i[0], i[1]), 2, (0, 0, 255), 3)
 
