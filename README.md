@@ -23,3 +23,9 @@
 二值化后轮廓检测
 
 ![Contours](./Contours.jpg)
+
+![new_binary_image](./new_binary_image.jpg)
+
+![ROI—new](./ROI—new.jpg)
+
+![实物非圆ROI](./实物非圆ROI.jpg)
