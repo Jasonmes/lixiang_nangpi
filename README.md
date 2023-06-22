@@ -10,22 +10,22 @@
 
 最小二乘法
 
-![LargestFittedEllipse](./LargestFittedEllipse.jpg)
+![LargestFittedEllipse](./output/LargestFittedEllipse.jpg)
 
 
 
 二值化处理
 
-![binary_image](./binary_image.jpg)
+![binary_image](./output/binary_image.jpg)
 
 
 
 二值化后轮廓检测
 
-![Contours](./Contours.jpg)
+![Contours](./output/Contours.jpg)
 
-![new_binary_image](./new_binary_image.jpg)
+![new_binary_image](./output/new_binary_image.jpg)
 
-![ROI—new](./ROI—new.jpg)
+![ROI—new](./output/ROI—new.jpg)
 
-![实物非圆ROI](./实物非圆ROI.jpg)
+![实物非圆ROI](./output/实物非圆ROI.jpg)

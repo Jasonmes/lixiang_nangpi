@@ -4,6 +4,25 @@ import numpy as np
 # 读取图片
 image = cv2.imread('image/new.bmp')
 
+
+
+# 获取图像的尺寸
+height, width = image.shape[:2]
+
+# 设置新的尺寸
+# 如果图像在水平方向上拉伸，你可能想要减小宽度
+new_width = int(width * 1.016)  # 这里我们将宽度减少到80%。根据需要调整这个值
+new_height = height  # 如果你不想改变高度，可以保持不变
+
+# 调整图像尺寸
+image = cv2.resize(image, (new_width, new_height))
+
+# 显示原始和调整后的图像
+cv2.imshow('Resized Image', image)
+cv2.waitKey(0)
+
+
+
 # 转换到灰度图像
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
@@ -49,8 +68,9 @@ blur = cv2.GaussianBlur(gray, (9, 9), 2)
 
 # 使用Hough Circle Transform检测圆
 # 900和1000是关键
+# 这里的参数的修改，可以控制识别到的圆的个数，圆越往里收，圆心可能就越准确
 circles = cv2.HoughCircles(blur, cv2.HOUGH_GRADIENT, dp=1, minDist=50,
-                           param1=50, param2=30, minRadius=900, maxRadius=1100)
+                           param1=50, param2=30, minRadius=870, maxRadius=1100)
 
 import random
 
@@ -76,7 +96,7 @@ if circles is not None:
         # cv2.circle(image, (i[0], i[1]), i[2], color, 10)
         
         # 画出圆心
-        # cv2.circle(image, (i[0], i[1]), 2, color, 10)
+        cv2.circle(image, (i[0], i[1]), 2, color, 10)
 
         # 累加圆心坐标
         sum_x += i[0]
@@ -107,9 +127,9 @@ if circles is not None:
 
         print(f"Average center of the circles is at ({avg_x}, {avg_y})")
         # 以平均圆心为中心，画一个半径为980的圆
-        cv2.circle(image, (avg_x, avg_y), 940, (255, 255, 255), 10)
+        cv2.circle(image, (avg_x, avg_y), 940, (255, 255, 255), 2)
         # 以平均圆心为中心，画一个半径为980的圆
-        cv2.circle(image, (avg_x, avg_y), 980, (255, 255, 255), 10)
+        cv2.circle(image, (avg_x, avg_y), 983, (255, 255, 255), 2)
 
         # 显示处理后的图像
         cv2.imshow('外圆和内圆', image)
@@ -135,3 +155,36 @@ cv2.destroyAllWindows()
 # # cv2.imshow('Hough Circles', image)
 # # cv2.waitKey(0)
 # cv2.destroyAllWindows()
+# 创建一个全黑的掩码，大小与原始图像相同
+mask = np.zeros((image.shape[0], image.shape[1]), dtype=np.uint8)
+
+# 画出两个填充的白色圆
+cv2.circle(mask, (avg_x, avg_y), 976, 255, -1)  # 使用255来表示白色，半径稍大一些
+cv2.circle(mask, (avg_x, avg_y), 946, 0, -1)   # 使用0来表示黑色，半径稍小一些
+
+# 使用掩码与原始图像进行位操作
+result = cv2.bitwise_and(image, image, mask=mask)
+cv2.imwrite('圆环.jpg', result)
+
+
+# 显示处理后的图像
+cv2.imshow('Result', result)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+# 使用掩码与原始图像进行位操作来提取环形区域
+ring_area = cv2.bitwise_and(gray, gray, mask=mask)
+
+# 对环形区域进行二值化处理
+threshold_value = 54  # 可以根据需要调整阈值
+_, binary_ring_area = cv2.threshold(ring_area, threshold_value, 255, cv2.THRESH_BINARY)
+
+cv2.imwrite('黑白的圆环.jpg', binary_ring_area)
+# 显示二值化处理后的环形区域
+cv2.imshow('Binary Ring Area', binary_ring_area)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+# 完成了基本的取区域的工作
